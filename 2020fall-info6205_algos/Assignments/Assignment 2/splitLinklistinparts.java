@@ -5,34 +5,40 @@ package edu.northeastern.info6205;
  * @param k: the split sum
  * @return: the answer
  */
- class Solution {
-    
-    public int[][] splitLinkedListinParts(int[] root, int k) {
-        // Write your code here.
-        int n = root.length;
-        int sum = n % k;
-        int start = 0;
-        int [][]ans = new int[k][];
-        int sign;
-        for (int i = 0; i < k; i++) {
-            if (start >= n) {
-                ans[i] = new int[0];
-            }
-            else {
-                if (sum > 0) sign = n / k + 1;
-                else sign = n / k;
-                ans[i] = new int[sign];
-                for (int j = 0; j < sign ; j++) {
-                    ans[i][j] = root[start];
-                    start++;
-                }
-                if (sum > 0) {
-
-                    sum--;
-                }
-            }
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode[] splitListToParts(ListNode root, int k) {
+        int count = 0;
+        ListNode curNode = root;
+        while (curNode != null) {
+            count++;
+            curNode = curNode.next;
         }
 
-        return ans;
+        int size = count / k;
+        int mod = count % k;
+
+        ListNode[] result = new ListNode[k];
+        curNode = root;
+        for (int i = 0; curNode != null && i < k; i++) {
+            result[i] = curNode;
+            int curSize = size + (mod-- > 0 ? 1 : 0);
+            for (int j = 0; curNode != null && j < curSize - 1; j++) {
+                curNode = curNode.next;
+            }
+            ListNode nextNode = curNode.next;
+            curNode.next = null;
+            curNode = nextNode;
+        }
+        return result;
     }
 }
