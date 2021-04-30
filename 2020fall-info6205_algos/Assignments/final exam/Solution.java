@@ -11,11 +11,11 @@ public class Solution {
         }
         int[][] dp = new int[n][m];
         if(body[0][0]==0){
-            dp[0][0]='X';
+            dp[0][0]=1;
         }
         for (int i = 0; i < n; i++) {
             if (body[i][0] != 'X') {
-                dp[i][0] = 'X';
+                dp[i][0] = 1;
             } else {
                 break; 
             }
@@ -23,7 +23,7 @@ public class Solution {
         
         for (int j = 0; j < m; j++) {
             if (body[0][j] != 'X') {
-                dp[0][j] = 'X'; 
+                dp[0][j] = 1; 
             } else {
                 break;
             }
@@ -38,12 +38,12 @@ public class Solution {
                 }
             }
         }
-        if(dp[n-1][m-1]>=maxTime) {
+        if(dp[n-1][m-1]>0 && n+m-2<=maxTime) {
         	return "can infect";
         }else {
-        	
+        	 return "can not infect";
         }
-        return "can not infect";
+       
 	}
 	
 	
@@ -64,8 +64,9 @@ public class Solution {
 		System.out.println(fib(10));
 		System.out.println(fib(13));
 		System.out.println(fib(21));
+		char[][] body = {{'0','0','X','0'}, {'X','0','X','X'}, {'X','0','0','0'}};
 		
-		
+		System.out.println(getResult(body,4));
 		
 	}
 
